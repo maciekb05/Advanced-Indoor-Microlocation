@@ -8,12 +8,12 @@ public class Obstacle {
     private int height;
     private int transparency;
 
-    public Obstacle(int layoutX, int layoutY, int width, int height, int transparency) {
-        this.layoutX = layoutX;
-        this.layoutY = layoutY;
-        this.width = width;
-        this.height = height;
-        this.transparency = transparency;
+    public Obstacle(String layoutX, String layoutY, String width, String height) {
+        this.layoutX = Integer.parseInt(layoutX);
+        this.layoutY = Integer.parseInt(layoutY);
+        this.width = Integer.parseInt(width);
+        this.height = Integer.parseInt(height);
+
     }
 
 

@@ -7,9 +7,12 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.util.LinkedList;
 
 public class ParseScene {
-    public static void main(String[] args) {
+    LinkedList<Obstacle> obstacles;
+
+    public void parseObstacles(){
         try {
 
             File fXmlFile = new File("./src/maps/firstmap.fxml");
@@ -17,8 +20,6 @@ public class ParseScene {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
 
-            //optional, but recommended
-            //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
 
             System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
@@ -37,7 +38,7 @@ public class ParseScene {
 
                     Element eElement = (Element) nNode;
 
-                    System.out.println("Staff id : " + eElement.getAttribute("height"));
+                    obstacles.add(new Obstacle(eElement.getAttribute("layoutX"),eElement.getAttribute("layoutY"),eElement.getAttribute("width"),eElement.getAttribute("height")));
                 }
             }
         } catch (Exception e) {
