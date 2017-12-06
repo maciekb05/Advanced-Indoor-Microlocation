@@ -12,7 +12,6 @@ public class BeaconLoader {
     }
 
     public boolean load() {
-        boolean done;
         System.out.println("Loader");
         try {
             FileReader fileReader = new FileReader(filePath);
@@ -48,7 +47,6 @@ public class BeaconLoader {
                         } catch(NumberFormatException ex){
                             System.out.println(ex.getMessage());
                         }
-
                     }
                 }
             }
