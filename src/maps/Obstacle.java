@@ -2,47 +2,53 @@ package maps;
 
 
 public class Obstacle {
-    private int layoutX;
-    private int layoutY;
-    private int width;
-    private int height;
+    private double layoutX;
+    private double layoutY;
+    private double width;
+    private double height;
     private int transparency;
 
     public Obstacle(String layoutX, String layoutY, String width, String height) {
-        this.layoutX = Integer.parseInt(layoutX);
-        this.layoutY = Integer.parseInt(layoutY);
-        this.width = Integer.parseInt(width);
-        this.height = Integer.parseInt(height);
+        if(layoutX.equals("") || layoutX==null)
+            this.layoutX=0;
+        else
+            this.layoutX = Double.parseDouble(layoutX);
+        if(layoutY.equals("") || layoutY==null)
+            this.layoutY=0;
+        else
+            this.layoutY = Double.parseDouble(layoutY);
+        this.width = Double.parseDouble(width);
+        this.height = Double.parseDouble(height);
 
     }
 
 
-    public int getLayoutX() {
+    public double getLayoutX() {
         return layoutX;
     }
 
-    public void setLayoutX(int layoutX) {
+    public void setLayoutX(double layoutX) {
         this.layoutX = layoutX;
     }
 
-    public int getLayoutY() {
+    public double getLayoutY() {
         return layoutY;
     }
-    public void setLayoutY(int layoutY) {
+    public void setLayoutY(double layoutY) {
         this.layoutY = layoutY;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
-    public void setWidth(int width) {
+    public void setWidth(double width) {
         this.width = width;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
-    public void setHeight(int height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 

@@ -3,8 +3,8 @@ package sample;
 import java.util.LinkedList;
 
 public class Beacon {
-    private Integer layoutX;
-    private Integer layoutY;
+    private Double layoutX;
+    private Double layoutY;
     private String macAdress;
     private Integer timeStamp;
     private LinkedList<Integer> rssiList;
@@ -19,19 +19,19 @@ public class Beacon {
         this.rssiList = rssiList;
     }
 
-    public Integer getLayoutX() {
+    public Double getLayoutX() {
         return layoutX;
     }
 
-    public void setLayoutX(Integer layoutX) {
+    public void setLayoutX(Double layoutX) {
         this.layoutX = layoutX;
     }
 
-    public Integer getLayoutY() {
+    public Double getLayoutY() {
         return layoutY;
     }
 
-    public void setLayoutY(Integer layoutY) {
+    public void setLayoutY(Double layoutY) {
         this.layoutY = layoutY;
     }
 
