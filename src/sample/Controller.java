@@ -40,6 +40,10 @@ public class Controller {
         RSSI2.setText("000");
         RSSI3.setText("000");
         RSSI4.setText("000");
+
+        // Dodac do drugiego choosera jak juz bedza nadane macadressy
+        //BeaconLoader.loadRSSI(parseScene.getBeacons(),new File("./src/files/beacons.csv"));
+
  /*       BeaconLoader myBeaconLoader = new BeaconLoader(new File("./src/files/beacons.csv"));
 
 
@@ -77,6 +81,7 @@ public class Controller {
             for (Obstacle obstacle : parseScene.getObstacles()) {
                 addObstacle(obstacle);
             }
+
         }
 
     }
