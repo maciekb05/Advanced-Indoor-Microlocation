@@ -7,8 +7,9 @@ public class Obstacle {
     private double width;
     private double height;
     private int transparency;
+    private String fill;
 
-    public Obstacle(String layoutX, String layoutY, String width, String height) {
+    public Obstacle(String layoutX, String layoutY, String width, String height, String fill) {
         if(layoutX.equals("") || layoutX==null)
             this.layoutX=0;
         else
@@ -19,7 +20,7 @@ public class Obstacle {
             this.layoutY = Double.parseDouble(layoutY);
         this.width = Double.parseDouble(width);
         this.height = Double.parseDouble(height);
-
+        this.fill = fill;
     }
 
 
@@ -58,4 +59,13 @@ public class Obstacle {
     public void setTransparency(int transparency) {
         this.transparency = transparency;
     }
+
+    public void setFill(String fill) {
+        this.fill = fill;
+    }
+
+    public String getFill() {
+        return fill;
+    }
+
 }

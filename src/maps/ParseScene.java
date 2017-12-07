@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class ParseScene {
-    private LinkedList<Obstacle> obstacles;
+    public LinkedList<Obstacle> obstacles;
     private Document doc;
     private String path = "./src/files/firstmap.fxml";
 
@@ -32,7 +32,7 @@ public class ParseScene {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element eElement = (Element) nNode;
-                    obstacles.add(new Obstacle(eElement.getAttribute("layoutX"),eElement.getAttribute("layoutY"),eElement.getAttribute("width"),eElement.getAttribute("height")));
+                    obstacles.add(new Obstacle(eElement.getAttribute("layoutX"),eElement.getAttribute("layoutY"),eElement.getAttribute("width"),eElement.getAttribute("height"),eElement.getAttribute("fill")));
                 }
             }
         } catch (Exception e) {
