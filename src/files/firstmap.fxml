@@ -19,7 +19,7 @@
       <Pane prefHeight="490.0" prefWidth="503.0">
          <children>
             <Rectangle accessibleText="20" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="20.0" stroke="BLACK" strokeType="INSIDE" width="249.0" />
-            <Rectangle accessibleText="20" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="114.0" layoutX="247.0" layoutY="384.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
+            <Rectangle accessibleText="20" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="115.0" layoutX="247.0" layoutY="381.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
             <Rectangle accessibleText="20" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="471.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
             <Rectangle accessibleText="20" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="309.0" layoutX="247.0" layoutY="-2.0" stroke="BLACK" strokeType="INSIDE" width="20.0" />
             <Rectangle accessibleText="20" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="20.0" layoutX="88.0" layoutY="476.0" stroke="BLACK" strokeType="INSIDE" width="159.0" />

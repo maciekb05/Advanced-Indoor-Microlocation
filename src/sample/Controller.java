@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -22,6 +23,11 @@ public class Controller {
     Text RSSI3;
     @FXML
     Text RSSI4;
+
+    @FXML
+    Button mapChooserButton;
+    @FXML
+    Button beaconChooserButton;
 
     @FXML
     Pane mapPane;
