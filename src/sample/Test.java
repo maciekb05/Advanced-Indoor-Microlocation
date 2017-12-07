@@ -14,7 +14,6 @@ public class Test {
         if(myBeaconLoader.load()){
             ParseScene parseScene = new ParseScene();
             parseScene.parseObstacles();
-            parseScene.parseBacons(myBeaconLoader.getBeacons());
 
             for(Beacon beacon : myBeaconLoader.getBeacons()) {
                 System.out.println(beacon.getMacAdress());

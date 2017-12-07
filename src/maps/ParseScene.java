@@ -15,7 +15,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class ParseScene {
-    public LinkedList<Obstacle> obstacles;
+    private LinkedList<Obstacle> obstacles;
+    private LinkedList<Beacon> beacons;
     private Document doc;
     private String path = "./src/files/firstmap.fxml";
 
@@ -39,8 +40,28 @@ public class ParseScene {
             e.printStackTrace();
         }
     }
+    public void parseBeacons() {
+        try {
+            loadFxml(path);
+            beacons = new LinkedList<>();
 
-    public void parseBacons(LinkedList<Beacon> beacons){
+            NodeList nList = doc.getElementsByTagName("Circle");
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+
+                Node nNode = nList.item(temp);
+
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                    Element eElement = (Element) nNode;
+                        beacons.add(new Beacon(eElement.getAttribute("layoutX"),eElement.getAttribute("layoutY")));
+                }
+            }
+        } catch (SAXException | ParserConfigurationException | IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    /*public void parseBacons(LinkedList<Beacon> beacons){
         try {
             loadFxml(path);
 
@@ -64,7 +85,7 @@ public class ParseScene {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     private void loadFxml(String path) throws IOException, SAXException, ParserConfigurationException {
         File fXmlFile = new File(path);
@@ -73,6 +94,22 @@ public class ParseScene {
         doc = dBuilder.parse(fXmlFile);
 
         doc.getDocumentElement().normalize();
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public LinkedList<Obstacle> getObstacles() {
+        return obstacles;
+    }
+
+    public LinkedList<Beacon> getBeacons() {
+        return beacons;
     }
 }
 

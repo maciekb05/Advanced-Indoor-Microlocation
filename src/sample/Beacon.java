@@ -19,6 +19,12 @@ public class Beacon {
         this.rssiList = rssiList;
     }
 
+    public Beacon(String layoutX, String layoutY){
+        this.layoutX = Double.parseDouble(layoutX);
+        this.layoutY = Double.parseDouble(layoutY);
+
+    }
+
     public Double getLayoutX() {
         return layoutX;
     }
