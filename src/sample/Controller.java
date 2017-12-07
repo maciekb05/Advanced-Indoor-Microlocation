@@ -69,6 +69,7 @@ public class Controller {
         File selectedFile =  fileChooser.showOpenDialog(mapPane.getScene().getWindow());
 
         if (selectedFile != null) {
+            mapPane.getChildren().clear();
             ParseScene parseScene = new ParseScene();
             parseScene.setPath(selectedFile.getPath());
             parseScene.parseObstacles();
