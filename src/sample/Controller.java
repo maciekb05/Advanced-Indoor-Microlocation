@@ -1,11 +1,11 @@
 package sample;
 
+import beacons.Beacon;
+import beacons.BeaconLoader;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
@@ -15,8 +15,13 @@ import maps.ParseScene;
 
 import java.io.File;
 import java.util.LinkedList;
+import java.util.concurrent.CyclicBarrier;
 
 public class Controller {
+
+    LinkedList<Beacon> beacons;
+    LinkedList<Obstacle> obstacles;
+
     @FXML
     Text RSSI1;
     @FXML
@@ -27,10 +32,6 @@ public class Controller {
     Text RSSI4;
     @FXML
     BorderPane mainBorderPane;
-    @FXML
-    Button mapChooserButton;
-    @FXML
-    Button beaconChooserButton;
     @FXML
     Pane mapPane;
 
@@ -44,20 +45,6 @@ public class Controller {
         // Dodac do drugiego choosera jak juz bedza nadane macadressy
         //BeaconLoader.loadRSSI(parseScene.getBeacons(),new File("./src/files/beacons.csv"));
 
- /*       BeaconLoader myBeaconLoader = new BeaconLoader(new File("./src/files/beacons.csv"));
-
-
-        myBeaconLoader.load();
-        ParseScene parseScene = new ParseScene();
-        parseScene.parseObstacles();
-        parseScene.parseBacons(myBeaconLoader.getBeacons());
-
-
-
-            for(Beacon beacon : myBeaconLoader.getBeacons()) {
-
-                addBeacon(beacon);
-            }*/
     }
 
     @FXML
@@ -65,7 +52,7 @@ public class Controller {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Map files","*.fxml"));
         fileChooser.setTitle("Open Resource File");
-        fileChooser.setInitialDirectory(new File("src"));
+        fileChooser.setInitialDirectory(new File("src/files"));
         File selectedFile =  fileChooser.showOpenDialog(mapPane.getScene().getWindow());
 
         if (selectedFile != null) {
@@ -78,13 +65,46 @@ public class Controller {
             for (Beacon beacon:parseScene.getBeacons()){
                 addBeacon(beacon);
             }
+            beacons = parseScene.getBeacons();
 
             for (Obstacle obstacle : parseScene.getObstacles()) {
                 addObstacle(obstacle);
             }
+            obstacles = parseScene.getObstacles();
+        }
+        mainBorderPane.getScene().getWindow().sizeToScene();
+    }
 
+    @FXML
+    public void chooseBeacons(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Beacons Files","*.csv"));
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.setInitialDirectory(new File("src/files"));
+        File selectedFile =  fileChooser.showOpenDialog(mapPane.getScene().getWindow());
+
+        if (selectedFile != null) {
+            BeaconLoader beaconLoader = new BeaconLoader();
+            beaconLoader.loadRSSI(beacons,selectedFile);
         }
 
+    }
+
+    @FXML
+    public void simulate(){
+        Thread simulator0 = new SimulationThread(RSSI1, beacons.get(0));
+        Thread simulator1 = new SimulationThread(RSSI2, beacons.get(1));
+        Thread simulator2 = new SimulationThread(RSSI3, beacons.get(2));
+        Thread simulator3 = new SimulationThread(RSSI4, beacons.get(3));
+        try{
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        simulator0.start();
+        simulator1.start();
+        simulator2.start();
+        simulator3.start();
     }
 
     public void addObstacle(Obstacle obstacle) {

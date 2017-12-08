@@ -1,4 +1,4 @@
-package sample;
+package beacons;
 
 import java.util.LinkedList;
 
@@ -19,10 +19,15 @@ public class Beacon {
         this.rssiList = rssiList;
     }
 
-    public Beacon(String layoutX, String layoutY){
+    Beacon(String layoutX, String layoutY) {
         this.layoutX = Double.parseDouble(layoutX);
         this.layoutY = Double.parseDouble(layoutY);
+    }
 
+    public Beacon(String layoutX, String layoutY, String macAdress){
+        this.layoutX = Double.parseDouble(layoutX);
+        this.layoutY = Double.parseDouble(layoutY);
+        this.macAdress = macAdress;
     }
 
     public Double getLayoutX() {

@@ -1,10 +1,10 @@
-package sample;
+package beacons;
 
 import java.io.*;
 import java.util.*;
 
 public class BeaconLoader {
-    public static void loadRSSI(LinkedList<Beacon> beacons, File filePath) {
+    public void loadRSSI(LinkedList<Beacon> beacons, File filePath) {
         try {
             FileReader fileReader = new FileReader(filePath);
             BufferedReader fileIn = new BufferedReader(fileReader);
