@@ -19,7 +19,7 @@ public class SimulationThread extends Thread {
             System.out.println(beacon.getRssiList().get(i));
             text.setText(beacon.getRssiList().get(i).toString());
             try{
-                Thread.sleep(beacon.getTimeStamp()*3);
+                Thread.sleep(beacon.getTimeStamp());
             } catch (InterruptedException ex) {
 
             }

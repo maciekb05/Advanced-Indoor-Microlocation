@@ -52,7 +52,7 @@ public class Controller {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Map files","*.fxml"));
         fileChooser.setTitle("Open Resource File");
-        fileChooser.setInitialDirectory(new File("src"));
+        fileChooser.setInitialDirectory(new File("src/files"));
         File selectedFile =  fileChooser.showOpenDialog(mapPane.getScene().getWindow());
 
         if (selectedFile != null) {
@@ -80,7 +80,7 @@ public class Controller {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Beacons Files","*.csv"));
         fileChooser.setTitle("Open Resource File");
-        fileChooser.setInitialDirectory(new File("src"));
+        fileChooser.setInitialDirectory(new File("src/files"));
         File selectedFile =  fileChooser.showOpenDialog(mapPane.getScene().getWindow());
 
         if (selectedFile != null) {
