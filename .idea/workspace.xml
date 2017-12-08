@@ -5,10 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/out/production/Advanced-Indoor-Microlocation/sample/Controller.class" afterPath="$PROJECT_DIR$/out/production/Advanced-Indoor-Microlocation/sample/Controller.class" />
       <change beforePath="$PROJECT_DIR$/out/production/Advanced-Indoor-Microlocation/sample/Main.class" afterPath="$PROJECT_DIR$/out/production/Advanced-Indoor-Microlocation/sample/Main.class" />
-      <change beforePath="$PROJECT_DIR$/src/files/beacons.csv" afterPath="$PROJECT_DIR$/src/files/beacons.csv" />
-      <change beforePath="$PROJECT_DIR$/src/files/firstmap.fxml" afterPath="$PROJECT_DIR$/src/files/firstmap.fxml" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" afterPath="$PROJECT_DIR$/src/sample/Controller.java" />
-      <change beforePath="$PROJECT_DIR$/src/sample/SimulationThread.java" afterPath="$PROJECT_DIR$/src/sample/SimulationThread.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -581,11 +577,18 @@
       <option name="project" value="LOCAL" />
       <updated>1512745053019</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Slight improvements">
+      <created>1512746417644</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1512746417644</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45250000" />
+    <option name="totallyTimeSpent" value="45284000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -691,14 +694,14 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <MESSAGE value="init JavaFX" />
     <MESSAGE value="First version of working parser :)" />
     <MESSAGE value="Second version of parser" />
     <MESSAGE value="Added fill in Obstacles&#10;Added map to gui" />
     <MESSAGE value="Fixed Bug with lots of exceptions xD" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Bug with lots of exceptions xD" />
+    <MESSAGE value="Slight improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Slight improvements" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
