@@ -1,11 +1,12 @@
 package maps;
 
+import beacons.Beacon;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import sample.Beacon;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -53,39 +54,13 @@ public class ParseScene {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element eElement = (Element) nNode;
-                        beacons.add(new Beacon(eElement.getAttribute("layoutX"),eElement.getAttribute("layoutY")));
+                        beacons.add(new Beacon(eElement.getAttribute("layoutX"),eElement.getAttribute("layoutY"), eElement.getAttribute("id")));
                 }
             }
         } catch (SAXException | ParserConfigurationException | IOException e1) {
             e1.printStackTrace();
         }
     }
-
-    /*public void parseBacons(LinkedList<Beacon> beacons){
-        try {
-            loadFxml(path);
-
-            NodeList nList = doc.getElementsByTagName("Circle");
-
-            for (int temp = 0; temp < nList.getLength(); temp++) {
-
-                Node nNode = nList.item(temp);
-
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-                    Element eElement = (Element) nNode;
-                    for (Beacon beacon: beacons) {
-                        if(beacon.getMacAdress().equals(eElement.getAttribute("id"))){
-                            beacon.setLayoutX(Double.parseDouble(eElement.getAttribute("layoutX")));
-                            beacon.setLayoutY(Double.parseDouble(eElement.getAttribute("layoutY")));
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
     private void loadFxml(String path) throws IOException, SAXException, ParserConfigurationException {
         File fXmlFile = new File(path);
