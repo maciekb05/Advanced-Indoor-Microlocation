@@ -16,11 +16,12 @@ public class SimulationThread extends Thread {
 
     public void run() {
         for(int i = 0; i<beacon.getRssiList().size();i++) {
+            System.out.println(beacon.getRssiList().get(i));
             text.setText(beacon.getRssiList().get(i).toString());
             try{
-                Thread.sleep(beacon.getTimeStamp());
+                Thread.sleep(beacon.getTimeStamp()*3);
             } catch (InterruptedException ex) {
-                ex.printStackTrace();
+
             }
             i++;
         }

@@ -96,7 +96,11 @@ public class Controller {
         Thread simulator1 = new SimulationThread(RSSI2, beacons.get(1));
         Thread simulator2 = new SimulationThread(RSSI3, beacons.get(2));
         Thread simulator3 = new SimulationThread(RSSI4, beacons.get(3));
-
+        try{
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
         simulator0.start();
         simulator1.start();
         simulator2.start();
