@@ -1,36 +1,28 @@
-package sample;
+package beacons;
 
 import java.io.*;
 import java.util.*;
 
 public class BeaconLoader {
-    private File filePath;
-    private LinkedList<Beacon> beacons;
-
-    public BeaconLoader(File filePath) {
-        this.filePath = filePath;
-    }
-
-    public boolean load() {
-        System.out.println("Loader");
+    public void loadRSSI(LinkedList<Beacon> beacons, File filePath) {
         try {
             FileReader fileReader = new FileReader(filePath);
             BufferedReader fileIn = new BufferedReader(fileReader);
             String line;
 
-            //Adding mac Adresses
+            //Setting mac Adresses
             line = fileIn.readLine();
+            String[] macSplitted = line.split(",");
 
-            String[] lineSplitted = line.split(",");
-            beacons = new LinkedList<>();
-            for(int i = 0; i<lineSplitted.length; ++i) {
-                beacons.add(new Beacon(lineSplitted[i]));
-            }
             //Adding TimeStamps
             line = fileIn.readLine();
-            lineSplitted = line.split(",");
+            String lineSplitted[] = line.split(",");
             for(int i = 0; i<lineSplitted.length; ++i) {
-                beacons.get(i).setTimeStamp(Integer.parseInt(lineSplitted[i]));
+                for(int j = 0; j<lineSplitted.length; ++j) {
+                    if(beacons.get(i).getMacAdress().equals(macSplitted[j])) {
+                        beacons.get(i).setTimeStamp(Integer.parseInt(lineSplitted[j]));
+                    }
+                }
             }
 
             //Adding RSSI's
@@ -45,23 +37,21 @@ public class BeaconLoader {
                         try{
                             listOfRssi.get(i).add(Integer.parseInt(lineSplitted[i]));
                         } catch(NumberFormatException ex){
-                            System.out.println(ex.getMessage());
+                            //Jesli trafimy tu to znaczy ze ktorys Beacon ma mniej RSSI (moze miec mniejszy TimeStamp)
                         }
                     }
                 }
             }
             for(int i=0;i<lineSplitted.length;++i) {
-                beacons.get(i).setRssiList(listOfRssi.get(i));
+                for(int j=0;j<lineSplitted.length;++j) {
+                    if (beacons.get(i).getMacAdress().equals(macSplitted[j])) {
+                        beacons.get(i).setRssiList(listOfRssi.get(j));
+                    }
+                }
             }
 
         } catch(Exception ex) {
             ex.printStackTrace();
-            return false;
         }
-        return true;
-    }
-
-    public LinkedList<Beacon> getBeacons() {
-        return beacons;
     }
 }

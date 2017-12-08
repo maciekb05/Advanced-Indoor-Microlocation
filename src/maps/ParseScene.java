@@ -1,11 +1,12 @@
 package maps;
 
+import beacons.Beacon;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import sample.Beacon;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,7 +16,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class ParseScene {
-    public LinkedList<Obstacle> obstacles;
+    private LinkedList<Obstacle> obstacles;
+    private LinkedList<Beacon> beacons;
     private Document doc;
     private String path = "./src/files/firstmap.fxml";
 
@@ -39,13 +41,12 @@ public class ParseScene {
             e.printStackTrace();
         }
     }
-
-    public void parseBacons(LinkedList<Beacon> beacons){
+    public void parseBeacons() {
         try {
             loadFxml(path);
+            beacons = new LinkedList<>();
 
             NodeList nList = doc.getElementsByTagName("Circle");
-
             for (int temp = 0; temp < nList.getLength(); temp++) {
 
                 Node nNode = nList.item(temp);
@@ -53,16 +54,11 @@ public class ParseScene {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element eElement = (Element) nNode;
-                    for (Beacon beacon: beacons) {
-                        if(beacon.getMacAdress().equals(eElement.getAttribute("id"))){
-                            beacon.setLayoutX(Double.parseDouble(eElement.getAttribute("layoutX")));
-                            beacon.setLayoutY(Double.parseDouble(eElement.getAttribute("layoutY")));
-                        }
-                    }
+                        beacons.add(new Beacon(eElement.getAttribute("layoutX"),eElement.getAttribute("layoutY"), eElement.getAttribute("id")));
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SAXException | ParserConfigurationException | IOException e1) {
+            e1.printStackTrace();
         }
     }
 
@@ -73,6 +69,22 @@ public class ParseScene {
         doc = dBuilder.parse(fXmlFile);
 
         doc.getDocumentElement().normalize();
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public LinkedList<Obstacle> getObstacles() {
+        return obstacles;
+    }
+
+    public LinkedList<Beacon> getBeacons() {
+        return beacons;
     }
 }
 

@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane fx:id="mainBorderPane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <left>
       <VBox fx:id="playButton" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="134.0" BorderPane.alignment="CENTER">
          <children>
@@ -18,7 +18,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Text>
-            <Button fx:id="mapChooserButton" mnemonicParsing="false" text="Choose map...">
+            <Button fx:id="mapChooserButton" mnemonicParsing="false" onAction="#chooseMap" text="Choose map...">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -31,7 +31,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Text>
-            <Button fx:id="beaconChooserButton" mnemonicParsing="false" text="Choose Beacon...">
+            <Button fx:id="beaconChooserButton" mnemonicParsing="false" onAction="#chooseBeacons" text="Choose Beacon...">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -39,7 +39,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </Button>
-            <Button mnemonicParsing="false" text="Simulate" textAlignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#simulate" text="Simulate" textAlignment="CENTER">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
@@ -117,6 +117,12 @@
       <Pane BorderPane.alignment="CENTER">
          <children>
             <Pane fx:id="mapPane" />
-         </children></Pane>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin></Pane>
    </center>
 </BorderPane>
