@@ -5,6 +5,7 @@ import beacons.BeaconLoader;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -33,10 +34,14 @@ public class Controller {
     Pane mapPane;
     @FXML
     HBox hBoxRSSI;
+    @FXML
+    Button chooseMapButton;
+    @FXML
+    Button chooseBeaconButton;
 
     @FXML
     public void initialize() {
-
+        chooseBeaconButton.setDisable(true);
     }
 
     @FXML
@@ -65,6 +70,7 @@ public class Controller {
             obstacles = parseScene.getObstacles();
         }
         mainBorderPane.getScene().getWindow().sizeToScene();
+        chooseBeaconButton.setDisable(false);
     }
 
     @FXML
