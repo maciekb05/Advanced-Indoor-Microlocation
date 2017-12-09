@@ -9,7 +9,7 @@ public class Beacon {
     private Integer timeStamp;
     private LinkedList<Integer> rssiList;
 
-    Beacon(String macAdress){
+    public Beacon(String macAdress){
         this.macAdress = macAdress;
     }
 

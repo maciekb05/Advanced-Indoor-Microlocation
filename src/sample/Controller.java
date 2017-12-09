@@ -2,9 +2,14 @@ package sample;
 
 import beacons.Beacon;
 import beacons.BeaconLoader;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -21,30 +26,22 @@ public class Controller {
 
     LinkedList<Beacon> beacons;
     LinkedList<Obstacle> obstacles;
+    LinkedList<Text> labelRSSI;
 
-    @FXML
-    Text RSSI1;
-    @FXML
-    Text RSSI2;
-    @FXML
-    Text RSSI3;
-    @FXML
-    Text RSSI4;
     @FXML
     BorderPane mainBorderPane;
     @FXML
     Pane mapPane;
+    @FXML
+    HBox hBoxRSSI;
+    @FXML
+    Button chooseMapButton;
+    @FXML
+    Button chooseBeaconButton;
 
     @FXML
     public void initialize() {
-        RSSI1.setText("000");
-        RSSI2.setText("000");
-        RSSI3.setText("000");
-        RSSI4.setText("000");
-
-        // Dodac do drugiego choosera jak juz bedza nadane macadressy
-        //BeaconLoader.loadRSSI(parseScene.getBeacons(),new File("./src/files/beacons.csv"));
-
+        chooseBeaconButton.setDisable(true);
     }
 
     @FXML
@@ -73,6 +70,7 @@ public class Controller {
             obstacles = parseScene.getObstacles();
         }
         mainBorderPane.getScene().getWindow().sizeToScene();
+        chooseBeaconButton.setDisable(false);
     }
 
     @FXML
@@ -82,29 +80,41 @@ public class Controller {
         fileChooser.setTitle("Open Resource File");
         fileChooser.setInitialDirectory(new File("src/files"));
         File selectedFile =  fileChooser.showOpenDialog(mapPane.getScene().getWindow());
-
+        labelRSSI = new LinkedList<>();
         if (selectedFile != null) {
             BeaconLoader beaconLoader = new BeaconLoader();
             beaconLoader.loadRSSI(beacons,selectedFile);
         }
+        if (selectedFile != null) {
+            hBoxRSSI.getChildren().clear();
+            for(Beacon beacon : beacons) {
+                VBox vBox = new VBox();
+                vBox.getChildren().add(new Text(beacon.getMacAdress()));
+                labelRSSI.add(new Text("0"));
+                vBox.getChildren().add(labelRSSI.getLast());
+                vBox.setPadding(new Insets(10));
+                hBoxRSSI.getChildren().add(vBox);
+            }
 
+        }
+        mainBorderPane.getScene().getWindow().sizeToScene();
     }
 
     @FXML
     public void simulate(){
-        Thread simulator0 = new SimulationThread(RSSI1, beacons.get(0));
-        Thread simulator1 = new SimulationThread(RSSI2, beacons.get(1));
-        Thread simulator2 = new SimulationThread(RSSI3, beacons.get(2));
-        Thread simulator3 = new SimulationThread(RSSI4, beacons.get(3));
-        try{
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+        LinkedList<SimulationThread> threads = new LinkedList<>();
+
+        for(int i = 0; i < beacons.size(); ++i) {
+            threads.add(new SimulationThread(labelRSSI.get(i),beacons.get(i)));
         }
-        simulator0.start();
-        simulator1.start();
-        simulator2.start();
-        simulator3.start();
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            System.out.println("Interrupted Simulation");
+        }
+        for(SimulationThread thread : threads) {
+            thread.start();
+        }
     }
 
     public void addObstacle(Obstacle obstacle) {
@@ -123,13 +133,13 @@ public class Controller {
 
     public void addBeacon(Beacon beacon) {
         Double x, y;
-        Circle circle = new Circle();
+//        Circle circle = new Circle();
         if (beacon.getLayoutX() != null && beacon.getLayoutY() != null) {
             x = beacon.getLayoutX();
             y = beacon.getLayoutY();
 
-            circle.setCenterX(x);
-            circle.setCenterY(y);
+//            circle.setCenterX(x);
+//            circle.setCenterY(y);
             mapPane.getChildren().add(new Circle(x, y, 10));
         }
 

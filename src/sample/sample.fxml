@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="mainBorderPane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
@@ -18,7 +17,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Text>
-            <Button fx:id="mapChooserButton" mnemonicParsing="false" onAction="#chooseMap" text="Choose map...">
+            <Button fx:id="chooseMapButton" mnemonicParsing="false" onAction="#chooseMap" text="Choose map...">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -31,7 +30,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Text>
-            <Button fx:id="beaconChooserButton" mnemonicParsing="false" onAction="#chooseBeacons" text="Choose Beacon...">
+            <Button fx:id="chooseBeaconButton" mnemonicParsing="false" onAction="#chooseBeacons" text="Choose Beacon...">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -53,61 +52,7 @@
       </VBox>
    </left>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="66.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Beacon 1 RSSI">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="RSSI1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-               </children>
-            </VBox>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Beacon 2 RSSI">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="RSSI2" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-               </children>
-            </VBox>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Beacon 3 RSSI">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="RSSI3" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Beacon 4 RSSI">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="RSSI4" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-               </children>
-               <padding>
-                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
-               </padding>
-            </VBox>
-         </children>
+      <HBox fx:id="hBoxRSSI" alignment="CENTER" prefHeight="66.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>

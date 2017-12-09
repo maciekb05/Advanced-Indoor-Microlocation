@@ -1,12 +1,15 @@
 package sample;
 
 import beacons.Beacon;
+import javafx.application.Platform;
 import javafx.scene.text.Text;
 
 public class SimulationThread extends Thread {
 
     Text text;
     Beacon beacon;
+    Integer timeStamp;
+    Integer numberOfRSSI;
 
     SimulationThread(Text text, Beacon beacon) {
         this.text = text;
@@ -15,15 +18,21 @@ public class SimulationThread extends Thread {
     }
 
     public void run() {
-        for(int i = 0; i<beacon.getRssiList().size();i++) {
-            System.out.println(beacon.getRssiList().get(i));
-            text.setText(beacon.getRssiList().get(i).toString());
-            try{
-                Thread.sleep(beacon.getTimeStamp());
-            } catch (InterruptedException ex) {
+        timeStamp = beacon.getTimeStamp();
+        numberOfRSSI = beacon.getRssiList().size();
+        int i = 0;
+        while(true) {
+            final int finalI = i++;
 
+            Platform.runLater ( () -> text.setText(beacon.getRssiList().get(finalI).toString()));
+            try{
+                Thread.sleep(timeStamp);
+            } catch (InterruptedException ex) {
+                System.out.println("Interrupted SimulationThread");
             }
-            i++;
+            if(finalI == numberOfRSSI - 1 ){
+                break;
+            }
         }
     }
 }
