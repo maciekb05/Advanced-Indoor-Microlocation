@@ -4,7 +4,7 @@ import world.*;
 import javafx.application.Platform;
 import javafx.scene.text.Text;
 
-public class SimulationThread extends Thread {
+public class SimulationThread extends Thread implements Simulation {
 
     Text text;
     Beacon beacon;
@@ -26,7 +26,7 @@ public class SimulationThread extends Thread {
         while(true) {
             final int finalI = i++;
 
-            Platform.runLater ( () -> text.setText(data.getRSSI().get(finalI).toString()));
+            Platform.runLater ( () -> onHandle(finalI));
             try{
                 Thread.sleep(timeStamp);
             } catch (InterruptedException ex) {
@@ -36,5 +36,9 @@ public class SimulationThread extends Thread {
                 break;
             }
         }
+    }
+
+    public void onHandle(Integer i) {
+        text.setText(data.getRSSI().get(i).toString());
     }
 }
