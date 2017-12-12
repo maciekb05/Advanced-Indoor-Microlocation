@@ -1,5 +1,4 @@
-package maps;
-
+package world;
 
 public class Obstacle {
     private double layoutX;
@@ -18,11 +17,11 @@ public class Obstacle {
             this.layoutY=0;
         else
             this.layoutY = Double.parseDouble(layoutY);
+
         this.width = Double.parseDouble(width);
         this.height = Double.parseDouble(height);
         this.fill = fill;
     }
-
 
     public double getLayoutX() {
         return layoutX;
@@ -35,6 +34,7 @@ public class Obstacle {
     public double getLayoutY() {
         return layoutY;
     }
+
     public void setLayoutY(double layoutY) {
         this.layoutY = layoutY;
     }
@@ -42,6 +42,7 @@ public class Obstacle {
     public double getWidth() {
         return width;
     }
+
     public void setWidth(double width) {
         this.width = width;
     }
@@ -49,6 +50,7 @@ public class Obstacle {
     public double getHeight() {
         return height;
     }
+
     public void setHeight(double height) {
         this.height = height;
     }
@@ -56,16 +58,16 @@ public class Obstacle {
     public int getTransparency() {
         return transparency;
     }
+
     public void setTransparency(int transparency) {
         this.transparency = transparency;
-    }
-
-    public void setFill(String fill) {
-        this.fill = fill;
     }
 
     public String getFill() {
         return fill;
     }
 
+    public void setFill(String fill) {
+        this.fill = fill;
+    }
 }

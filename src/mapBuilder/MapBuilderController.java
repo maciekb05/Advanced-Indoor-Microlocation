@@ -1,6 +1,7 @@
 package mapBuilder;
 
-import beacons.Beacon;
+import world.*;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -16,14 +17,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import maps.Obstacle;
 
 import java.util.LinkedList;
 
 
 public class MapBuilderController{
-    LinkedList<Beacon> beacons;
-    LinkedList<Obstacle> obstacles;
+    private LinkedList<Beacon> beacons;
+    private LinkedList<Obstacle> obstacles;
 
     @FXML
     Pane mapPane;

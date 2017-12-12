@@ -1,6 +1,7 @@
 package maps;
 
-import beacons.Beacon;
+import world.Beacon;
+import world.Obstacle;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

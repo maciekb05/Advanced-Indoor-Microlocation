@@ -1,8 +1,7 @@
 package sample;
 
-import beacons.Beacon;
+import world.*;
 import beacons.BeaconLoader;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -15,17 +14,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import javafx.stage.FileChooser;
-import maps.Obstacle;
 import maps.ParseScene;
 
 import java.io.File;
 import java.util.LinkedList;
-import java.util.concurrent.CyclicBarrier;
 
 public class Controller {
 
-    LinkedList<Beacon> beacons;
-    LinkedList<Obstacle> obstacles;
+    World world;
     LinkedList<Text> labelRSSI;
 
     @FXML
@@ -42,6 +38,7 @@ public class Controller {
     @FXML
     public void initialize() {
         chooseBeaconButton.setDisable(true);
+        world = new World();
     }
 
     @FXML
@@ -59,15 +56,15 @@ public class Controller {
             parseScene.parseObstacles();
             parseScene.parseBeacons();
 
-            for (Beacon beacon:parseScene.getBeacons()){
+            for (Beacon beacon :parseScene.getBeacons()){
                 addBeacon(beacon);
             }
-            beacons = parseScene.getBeacons();
+            world.setBeacons(parseScene.getBeacons());
 
             for (Obstacle obstacle : parseScene.getObstacles()) {
                 addObstacle(obstacle);
             }
-            obstacles = parseScene.getObstacles();
+            world.setObstacles(parseScene.getObstacles());
         }
         mainBorderPane.getScene().getWindow().sizeToScene();
         chooseBeaconButton.setDisable(false);
@@ -75,6 +72,8 @@ public class Controller {
 
     @FXML
     public void chooseBeacons(){
+        Receiver receiver = new Receiver();
+        world.getReceivers().add(receiver);
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Beacons Files","*.csv"));
         fileChooser.setTitle("Open Resource File");
@@ -83,11 +82,11 @@ public class Controller {
         labelRSSI = new LinkedList<>();
         if (selectedFile != null) {
             BeaconLoader beaconLoader = new BeaconLoader();
-            beaconLoader.loadRSSI(beacons,selectedFile);
+            beaconLoader.loadRSSI(world.getBeacons(), world.getReceivers().getLast(), selectedFile);
         }
         if (selectedFile != null) {
             hBoxRSSI.getChildren().clear();
-            for(Beacon beacon : beacons) {
+            for(Beacon beacon : world.getBeacons()) {
                 VBox vBox = new VBox();
                 vBox.getChildren().add(new Text(beacon.getMacAdress()));
                 labelRSSI.add(new Text("0"));
@@ -104,8 +103,8 @@ public class Controller {
     public void simulate(){
         LinkedList<SimulationThread> threads = new LinkedList<>();
 
-        for(int i = 0; i < beacons.size(); ++i) {
-            threads.add(new SimulationThread(labelRSSI.get(i),beacons.get(i)));
+        for(int i = 0; i < world.getBeacons().size(); ++i) {
+            threads.add(new SimulationThread(labelRSSI.get(i), world.getBeacons().get(i), world.getReceivers().get(0).getDataFromBeacon().get(i)));
         }
         try{
             Thread.sleep(2000);
@@ -133,17 +132,11 @@ public class Controller {
 
     public void addBeacon(Beacon beacon) {
         Double x, y;
-//        Circle circle = new Circle();
-        if (beacon.getLayoutX() != null && beacon.getLayoutY() != null) {
-            x = beacon.getLayoutX();
-            y = beacon.getLayoutY();
-
-//            circle.setCenterX(x);
-//            circle.setCenterY(y);
+        if (beacon.getX() != null && beacon.getY() != null) {
+            x = beacon.getX();
+            y = beacon.getY();
             mapPane.getChildren().add(new Circle(x, y, 10));
         }
-
-
     }
 
 }

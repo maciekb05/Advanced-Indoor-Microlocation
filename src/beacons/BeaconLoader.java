@@ -1,10 +1,14 @@
 package beacons;
 
+import world.Beacon;
+import world.DataFromBeacon;
+import world.Receiver;
+
 import java.io.*;
 import java.util.*;
 
 public class BeaconLoader {
-    public void loadRSSI(LinkedList<Beacon> beacons, File filePath) {
+    public void loadRSSI(LinkedList<Beacon> beacons, Receiver receiver, File filePath) {
         try {
             FileReader fileReader = new FileReader(filePath);
             BufferedReader fileIn = new BufferedReader(fileReader);
@@ -26,16 +30,17 @@ public class BeaconLoader {
             }
 
             //Adding RSSI's
-            LinkedList<LinkedList<Integer>> listOfRssi = new LinkedList<>();
+            LinkedList<DataFromBeacon> data = new LinkedList<>();
             for(int i=0; i<lineSplitted.length;++i) {
-                listOfRssi.add(new LinkedList<>());
+                data.add(new DataFromBeacon());
             }
             while((line = fileIn.readLine())!=null) {
                 lineSplitted = line.split(",");
                 for(int i=0; i<lineSplitted.length;++i) {
-                    if(lineSplitted[i]!="") {
+                    data.get(i).setMacAdress(macSplitted[i]);
+                    if(!lineSplitted[i].equals("")) {
                         try{
-                            listOfRssi.get(i).add(Integer.parseInt(lineSplitted[i]));
+                            data.get(i).getRSSI().add(Integer.parseInt(lineSplitted[i]));
                         } catch(NumberFormatException ex){
                             //Jesli trafimy tu to znaczy ze ktorys Beacon ma mniej RSSI (moze miec mniejszy TimeStamp)
                         }
@@ -45,7 +50,7 @@ public class BeaconLoader {
             for(int i=0;i<lineSplitted.length;++i) {
                 for(int j=0;j<lineSplitted.length;++j) {
                     if (beacons.get(i).getMacAdress().equals(macSplitted[j])) {
-                        beacons.get(i).setRssiList(listOfRssi.get(j));
+                        receiver.setDataFromBeacon(data);
                     }
                 }
             }
