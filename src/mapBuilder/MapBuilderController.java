@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -29,6 +30,9 @@ public class MapBuilderController{
     Pane mapPane;
 
     @FXML
+    VBox parameters;
+
+    @FXML
     public void initialize(){
         beacons=new LinkedList<>();
         obstacles=new LinkedList<>();
@@ -38,7 +42,7 @@ public class MapBuilderController{
     @FXML
     public void obstacleButtonPressed() {
         Obstacle obstacle;
-        obstacle = setObstacleParametres();
+        obstacle = setDefaultObstacleParametres();
         drawObstacle(obstacle);
         obstacles.add(obstacle);
     }
@@ -46,7 +50,7 @@ public class MapBuilderController{
     @FXML
     public void beaconButtonPressed(){
         Beacon beacon;
-        beacon = setBeaconParametres();
+        beacon = setDefaultBeaconParametres();
         drawBeacon(beacon);
         beacons.add(beacon);
     }
@@ -64,6 +68,8 @@ public class MapBuilderController{
             @Override public void handle(MouseEvent event) {
                 System.out.println("Rectangle: Mouse pressed event" +
                         ", synthesized: " + event.isSynthesized());
+                setObstaclesParametres();
+                rectangle.setFill(Color.web("red"));
                 event.consume();
             }
         });
@@ -92,6 +98,7 @@ public class MapBuilderController{
             }
         });*/
     }
+
     public void drawBeacon(Beacon beacon){
         Circle circle;
 
@@ -101,7 +108,7 @@ public class MapBuilderController{
 
     }
     // Popup window with obstacle form
-    private Obstacle setObstacleParametres() {
+    private Obstacle setDefaultObstacleParametres() {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL); //it blocks interaction with othres scenes
         window.setTitle("Obstacle setter");
@@ -148,7 +155,7 @@ public class MapBuilderController{
         return obstacle;
     }
     //Popup window with beacon form
-    private Beacon setBeaconParametres(){
+    private Beacon setDefaultBeaconParametres(){
         {
             Stage window = new Stage();
             window.initModality(Modality.APPLICATION_MODAL); //it blocks interaction with othres scenes
@@ -188,5 +195,14 @@ public class MapBuilderController{
         }
     }
     //static class Wrapper<T> { T value ; }
+    private void setObstaclesParametres(){
+        Label label;
+        label = new Label("Width:");
+        final TextField width = new TextField();
+        width.setPrefColumnCount(10);
+
+
+        parameters.getChildren().addAll(label,width);
+    }
 }
 

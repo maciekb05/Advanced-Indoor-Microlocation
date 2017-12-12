@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane dividerPositions="0.2591973244147157" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="mapBuilder.MapBuilderController">
+<SplitPane dividerPositions="0.2591973244147157, 0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mapBuilder.MapBuilderController">
   <items>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+    <AnchorPane>
          <children>
-            <VBox layoutX="20.0" layoutY="73.0" prefHeight="247.0" prefWidth="134.0" spacing="40.0">
+            <VBox layoutX="20.0" layoutY="73.0" maxWidth="110.0" minWidth="110.0" prefHeight="247.0" prefWidth="134.0" spacing="40.0">
                <children>
                   <Button fx:id="obstacleButton" mnemonicParsing="false" onAction="#obstacleButtonPressed" prefHeight="45.0" prefWidth="90.0" text="Obstacle" />
                   <Button fx:id="beaconButton" mnemonicParsing="false" onAction="#beaconButtonPressed" prefHeight="45.0" prefWidth="90.0" text="Button" />
@@ -18,9 +18,14 @@
                </children>
             </VBox>
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+    <AnchorPane>
          <children>
-            <Pane fx:id="mapPane" prefHeight="398.0" prefWidth="418.0" />
+            <Pane fx:id="mapPane" layoutX="-1.0" prefHeight="398.0" prefWidth="342.0" />
          </children></AnchorPane>
+      <AnchorPane  prefHeight="398.0" prefWidth="119.0">
+         <children>
+            <VBox fx:id="parameters" alignment="CENTER" maxWidth="100.0" prefHeight="400.0" />
+         </children>
+      </AnchorPane>
   </items>
 </SplitPane>
