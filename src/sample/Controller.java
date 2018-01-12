@@ -21,8 +21,8 @@ import java.util.LinkedList;
 
 public class Controller {
 
-    World world;
-    LinkedList<Text> labelRSSI;
+    private World world;
+    private LinkedList<Text> labelRSSI;
 
     @FXML
     BorderPane mainBorderPane;
@@ -35,12 +35,20 @@ public class Controller {
     @FXML
     Button chooseBeaconButton;
 
+    /**
+     * Method to initialize world and window
+     */
     @FXML
     public void initialize() {
         chooseBeaconButton.setDisable(true);
         world = new World();
     }
 
+    /**
+     * OnChoose method for choosing file with map.
+     * It is loading, parsing and making beacon and receiver objects,
+     * printing map on pane, making active button for choosing file of data from beacons.
+     */
     @FXML
     public void chooseMap(){
         FileChooser fileChooser = new FileChooser();
@@ -70,6 +78,10 @@ public class Controller {
         chooseBeaconButton.setDisable(false);
     }
 
+    /**
+     * OnChoose method for choosing file with data from beacons.
+     * It is loading, parsing and adding data to beacons.
+     */
     @FXML
     public void chooseBeacons(){
         Receiver receiver = new Receiver();
@@ -99,6 +111,10 @@ public class Controller {
         mainBorderPane.getScene().getWindow().sizeToScene();
     }
 
+    /**
+     * OnClick method form Simulate! button.
+     * It is starting simulation threads.
+     */
     @FXML
     public void simulate(){
         LinkedList<SimulationThread> threads = new LinkedList<>();
@@ -116,7 +132,7 @@ public class Controller {
         }
     }
 
-    public void addObstacle(Obstacle obstacle) {
+    private void addObstacle(Obstacle obstacle) {
         double x, y, width, height;
         String fill;
         Rectangle rectangle;
@@ -130,7 +146,7 @@ public class Controller {
         mapPane.getChildren().add(rectangle);
     }
 
-    public void addBeacon(Beacon beacon) {
+    private void addBeacon(Beacon beacon) {
         Double x, y;
         if (beacon.getX() != null && beacon.getY() != null) {
             x = beacon.getX();

@@ -2,23 +2,23 @@ package world;
 
 import java.util.LinkedList;
 
+/**
+ * Receiver class represents receiver object (smartphone etc)
+ */
 public class Receiver {
-    LinkedList<DataFromBeacon> dataFromBeacon;
-    LinkedList<Integer> currentRSSI;
+    private LinkedList<DataFromBeacon> dataFromBeacon;
 
+    /**
+     * Gets data from beacon
+     */
     public LinkedList<DataFromBeacon> getDataFromBeacon() {
         return dataFromBeacon;
     }
 
+    /**
+     * Sets data from beacon
+     */
     public void setDataFromBeacon(LinkedList<DataFromBeacon> dataFromBeacon) {
         this.dataFromBeacon = dataFromBeacon;
-    }
-
-    public LinkedList<Integer> getCurrentRSSI() {
-        return currentRSSI;
-    }
-
-    public void setCurrentRSSI(LinkedList<Integer> currentRSSI) {
-        this.currentRSSI = currentRSSI;
     }
 }

@@ -2,6 +2,9 @@ package world;
 
 import java.util.LinkedList;
 
+/**
+ * World class represent a room or some indoor location
+ */
 public class World {
     private LinkedList<Beacon> beacons;
     private LinkedList<Obstacle> obstacles;
@@ -9,6 +12,9 @@ public class World {
     private Integer width;
     private Integer height;
 
+    /**
+     * Default constructor
+     */
     public World() {
         beacons = new LinkedList<>();
         obstacles = new LinkedList<>();
@@ -17,43 +23,33 @@ public class World {
         height = 0;
     }
 
+    /**
+     * Gets linked list of beacons
+     */
     public LinkedList<Beacon> getBeacons() {
         return beacons;
     }
 
+    /**
+     * Sets linked list of beacons
+     * @param beacons linked list of beacons
+     */
     public void setBeacons(LinkedList<Beacon> beacons) {
         this.beacons = beacons;
     }
 
-    public LinkedList<Obstacle> getObstacles() {
-        return obstacles;
-    }
-
+    /**
+     * Sets linked list of obstacles
+     * @param obstacles linked list of obstacles
+     */
     public void setObstacles(LinkedList<Obstacle> obstacles) {
         this.obstacles = obstacles;
     }
 
+    /**
+     * Gets linked list of receivers
+     */
     public LinkedList<Receiver> getReceivers() {
         return receivers;
-    }
-
-    public void setReceivers(LinkedList<Receiver> receivers) {
-        this.receivers = receivers;
-    }
-
-    public Integer getWidth() {
-        return width;
-    }
-
-    public void setWidth(Integer width) {
-        this.width = width;
-    }
-
-    public Integer getHeight() {
-        return height;
-    }
-
-    public void setHeight(Integer height) {
-        this.height = height;
     }
 }

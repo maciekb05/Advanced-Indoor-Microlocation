@@ -7,7 +7,16 @@ import world.Receiver;
 import java.io.*;
 import java.util.*;
 
+/**
+ * BeaconLoader class is to load beacon's data from csv file.
+ */
 public class BeaconLoader {
+    /**
+     * loadRSSI is loading beacon's data from csv file, setting mac adresses, timestamps, and RSSI's
+     * @param beacons it is a list of beacons to add data
+     * @param receiver it is a receiver to add beacons with data
+     * @param filePath path to csv file with data from beacons
+     */
     public void loadRSSI(LinkedList<Beacon> beacons, Receiver receiver, File filePath) {
         try {
             FileReader fileReader = new FileReader(filePath);
@@ -37,10 +46,9 @@ public class BeaconLoader {
             while((line = fileIn.readLine())!=null) {
                 lineSplitted = line.split(",");
                 for(int i=0; i<lineSplitted.length;++i) {
-                    data.get(i).setMacAdress(macSplitted[i]);
                     if(!lineSplitted[i].equals("")) {
                         try{
-                            data.get(i).getRSSI().add(Integer.parseInt(lineSplitted[i]));
+                            data.get(i).getRSSI().add(Double.parseDouble(lineSplitted[i]));
                         } catch(NumberFormatException ex){
                             //Jesli trafimy tu to znaczy ze ktorys Beacon ma mniej RSSI (moze miec mniejszy TimeStamp)
                         }

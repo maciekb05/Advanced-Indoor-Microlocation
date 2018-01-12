@@ -4,14 +4,21 @@ import world.*;
 import javafx.application.Platform;
 import javafx.scene.text.Text;
 
-public class SimulationThread extends Thread implements Simulation {
+/**
+ * SimulationThread is a thread of simulation of changing RSSI of one beacon.
+ */
+public class SimulationThread extends Thread{
 
-    Text text;
-    Beacon beacon;
-    DataFromBeacon data;
-    Integer timeStamp;
-    Integer numberOfRSSI;
+    private Text text;
+    private Beacon beacon;
+    private DataFromBeacon data;
 
+    /**
+     * Constructor with parameters, and setting the thread to deamon
+     * @param text text field to represent RSSI changes
+     * @param beacon beacon
+     * @param data data from beacon
+     */
     SimulationThread(Text text, Beacon beacon, DataFromBeacon data) {
         this.text = text;
         this.beacon = beacon;
@@ -19,26 +26,21 @@ public class SimulationThread extends Thread implements Simulation {
         setDaemon(true);
     }
 
+    /**
+     * method of simulation changes of RSSI
+     */
     public void run() {
-        timeStamp = beacon.getTimeStamp();
-        numberOfRSSI = data.getRSSI().size();
-        int i = 0;
-        while(true) {
-            final int finalI = i++;
+        Integer timeStamp = beacon.getTimeStamp();
 
-            Platform.runLater ( () -> onHandle(finalI));
+        for(Double rssi : data.getRSSI()) {
+
+            Platform.runLater ( () -> text.setText(rssi.toString()) );
             try{
                 Thread.sleep(timeStamp);
             } catch (InterruptedException ex) {
                 System.out.println("Interrupted SimulationThread");
             }
-            if(finalI == numberOfRSSI - 1 ){
-                break;
-            }
         }
     }
 
-    public void onHandle(Integer i) {
-        text.setText(data.getRSSI().get(i).toString());
-    }
 }

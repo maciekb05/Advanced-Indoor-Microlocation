@@ -2,28 +2,23 @@ package world;
 
 import java.util.LinkedList;
 
+/**
+ * DataFromBeacon class represents data which beacon is sending to a receiver
+ */
 public class DataFromBeacon {
-    String macAdress;
-    LinkedList<Integer> RSSI;
+    private LinkedList<Double> RSSI;
 
+    /**
+     * Default constructor
+     */
     public DataFromBeacon() {
-        macAdress = new String();
         RSSI = new LinkedList<>();
     }
 
-    public String getMacAdress() {
-        return macAdress;
-    }
-
-    public void setMacAdress(String macAdress) {
-        this.macAdress = macAdress;
-    }
-
-    public LinkedList<Integer> getRSSI() {
+    /**
+     * Gets linked list of RSSI
+     */
+    public LinkedList<Double> getRSSI() {
         return RSSI;
-    }
-
-    public void setRSSI(LinkedList<Integer> RSSI) {
-        this.RSSI = RSSI;
     }
 }
