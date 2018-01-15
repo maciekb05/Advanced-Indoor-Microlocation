@@ -4,43 +4,62 @@ import world.*;
 import javafx.application.Platform;
 import javafx.scene.text.Text;
 
+import java.util.LinkedList;
+
 /**
- * SimulationThread is a thread of simulation of changing RSSI of one beacon.
+ * SimulationThread is a thread of simulation of changing RSSI of every beacon.
  */
 public class SimulationThread extends Thread{
 
-    private Text text;
-    private Beacon beacon;
-    private DataFromBeacon data;
+    private final World world;
+    private final LinkedList<Text> labelRSSI;
 
     /**
-     * Constructor with parameters, and setting the thread to deamon
-     * @param text text field to represent RSSI changes
-     * @param beacon beacon
-     * @param data data from beacon
+     * Constructor with parameters World and LinkedList<Text>
+     * @param world world
+     * @param labelRSSI list of labels with RSSI to show how RSSI is changing
      */
-    SimulationThread(Text text, Beacon beacon, DataFromBeacon data) {
-        this.text = text;
-        this.beacon = beacon;
-        this.data = data;
+    SimulationThread(World world, LinkedList<Text> labelRSSI) {
+        this.world = world;
+        this.labelRSSI = labelRSSI;
         setDaemon(true);
     }
 
     /**
-     * method of simulation changes of RSSI
+     * Method of simulation changes of RSSI
      */
     public void run() {
-        Integer timeStamp = beacon.getTimeStamp();
+        Long minimalFirstTimeStamp = world.getReceiver().getDataFromBeacon().getFirst().getTimeStamps().getFirst();
+        Long maximalLastTimeStamp = world.getReceiver().getDataFromBeacon().getFirst().getTimeStamps().getLast();
+        for(DataFromBeacon dataFromBeacon : world.getReceiver().getDataFromBeacon()){
+            if(dataFromBeacon.getTimeStamps().getFirst()<minimalFirstTimeStamp){
+                minimalFirstTimeStamp = dataFromBeacon.getTimeStamps().getFirst();
+            }
+            if(dataFromBeacon.getTimeStamps().getLast()>maximalLastTimeStamp){
+                maximalLastTimeStamp = dataFromBeacon.getTimeStamps().getLast();
+            }
+        }
+        LinkedList<Integer> currentTimeStamp = new LinkedList<>();
+        for(int i=0; i<world.getReceiver().getDataFromBeacon().size(); i++){
+            currentTimeStamp.add(0);
+        }
+        LinkedList<DataFromBeacon> dataList = world.getReceiver().getDataFromBeacon();
+        for(Long currentTime = minimalFirstTimeStamp; currentTime <= maximalLastTimeStamp; currentTime++){
+            try {
+                Thread.sleep(0,100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            for (int currentDataNumber=0; currentDataNumber<dataList.size(); currentDataNumber++) {
+                if(currentTimeStamp.get(currentDataNumber)<dataList.get(currentDataNumber).getRSSI().size()-1){
+                    if(dataList.get(currentDataNumber).getTimeStamps().get(currentTimeStamp.get(currentDataNumber)).equals(currentTime)){
+                        final Integer currentFinalDataNumber = currentDataNumber;
 
-        for(Double rssi : data.getRSSI()) {
-
-            Platform.runLater ( () -> text.setText(rssi.toString()) );
-            try{
-                Thread.sleep(timeStamp);
-            } catch (InterruptedException ex) {
-                System.out.println("Interrupted SimulationThread");
+                        Platform.runLater ( () -> labelRSSI.get(currentFinalDataNumber).setText(dataList.get(currentFinalDataNumber).getRSSI().get(currentTimeStamp.get(currentFinalDataNumber)).toString()) );
+                        currentTimeStamp.set(currentDataNumber,currentTimeStamp.get(currentDataNumber)+1);
+                    }
+                }
             }
         }
     }
-
 }

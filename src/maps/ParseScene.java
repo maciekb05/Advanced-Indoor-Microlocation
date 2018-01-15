@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
-
 /**
  * ParseScene class is parsing maps from fxml files
  */
@@ -27,7 +26,7 @@ public class ParseScene {
     private String path = "./src/files/firstmap.fxml";
 
     /**
-     * parseObstacles is parsing walls, and additional obstacles from fxml file
+     * Parsing walls, and additional obstacles from fxml file
      */
     public void parseObstacles(){
         try {
@@ -51,7 +50,7 @@ public class ParseScene {
     }
 
     /**
-     * parseBeacons is parsing beacons from fxml file
+     * Parsing beacons from fxml file
      */
     public void parseBeacons() {
         try {
@@ -92,14 +91,14 @@ public class ParseScene {
     }
 
     /**
-     *  Gets linked list of obstacles
+     * @return Returns list of obstacles
      */
     public LinkedList<Obstacle> getObstacles() {
         return obstacles;
     }
 
     /**
-     * Gets linked list of beacons
+     * @return Returns list of beacons
      */
     public LinkedList<Beacon> getBeacons() {
         return beacons;

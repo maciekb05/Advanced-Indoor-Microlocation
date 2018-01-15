@@ -6,27 +6,26 @@ package world;
 public class Beacon {
     private Double X;
     private Double Y;
-    private String macAdress;
-    private Integer timeStamp;
+    private final String macAddress;
 
     /**
      * Constructor with only mac address of beacon
-     * @param macAdress mac address of beacon
+     * @param macAddress mac address of beacon
      */
-    public Beacon(String macAdress) {
-        this.macAdress = macAdress;
+    public Beacon(String macAddress) {
+        this.macAddress = macAddress;
     }
 
     /**
      * Constructor with mac address and position of beacon
      * @param X horizontal position of beacon
      * @param Y vertical position of beacon
-     * @param macAdress mac adress of beacon
+     * @param macAddress mac address of beacon
      */
-    public Beacon(String X, String Y, String macAdress){
+    public Beacon(String X, String Y, String macAddress){
         this.X = Double.parseDouble(X);
         this.Y = Double.parseDouble(Y);
-        this.macAdress = macAdress;
+        this.macAddress = macAddress;
     }
 
     /**
@@ -46,22 +45,8 @@ public class Beacon {
     /**
      * Gets beacon's mac address
      */
-    public String getMacAdress() {
-        return macAdress;
+    public String getMacAddress() {
+        return macAddress;
     }
 
-    /**
-     * Gets time stamp of beacon
-     */
-    public Integer getTimeStamp() {
-        return timeStamp;
-    }
-
-    /**
-     * Sets time stamp of beacon
-     * @param timeStamp time stamp of beacon (frequency of signals)
-     */
-    public void setTimeStamp(Integer timeStamp) {
-        this.timeStamp = timeStamp;
-    }
 }

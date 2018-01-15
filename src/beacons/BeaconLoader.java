@@ -8,11 +8,11 @@ import java.io.*;
 import java.util.*;
 
 /**
- * BeaconLoader class is to load beacon's data from csv file.
+ * BeaconLoader class is to load beacon's data from csv files.
  */
 public class BeaconLoader {
     /**
-     * loadRSSI is loading beacon's data from csv file, setting mac adresses, timestamps, and RSSI's
+     * Loads beacon's data from csv files, setting mac addresses, timestamps, and RSSI's
      * @param beacons it is a list of beacons to add data
      * @param receiver it is a receiver to add beacons with data
      * @param filePath path to csv file with data from beacons
@@ -23,45 +23,28 @@ public class BeaconLoader {
             BufferedReader fileIn = new BufferedReader(fileReader);
             String line;
 
-            //Setting mac Adresses
+            //Current beacon
+            Beacon currentBeacon = new Beacon("0");
+
+            //Setting current Beacon
             line = fileIn.readLine();
             String[] macSplitted = line.split(",");
-
-            //Adding TimeStamps
-            line = fileIn.readLine();
-            String lineSplitted[] = line.split(",");
-            for(int i = 0; i<lineSplitted.length; ++i) {
-                for(int j = 0; j<lineSplitted.length; ++j) {
-                    if(beacons.get(i).getMacAdress().equals(macSplitted[j])) {
-                        beacons.get(i).setTimeStamp(Integer.parseInt(lineSplitted[j]));
-                    }
+            for(Beacon beacon : beacons){
+                if(beacon.getMacAddress().equals(macSplitted[0])){
+                    currentBeacon = beacon;
                 }
             }
 
-            //Adding RSSI's
-            LinkedList<DataFromBeacon> data = new LinkedList<>();
-            for(int i=0; i<lineSplitted.length;++i) {
-                data.add(new DataFromBeacon());
-            }
+            //Adding Data from file
+            DataFromBeacon currentData = new DataFromBeacon();
+            currentData.setMacAddress(currentBeacon.getMacAddress());
+            String[] lineSplitted;
             while((line = fileIn.readLine())!=null) {
                 lineSplitted = line.split(",");
-                for(int i=0; i<lineSplitted.length;++i) {
-                    if(!lineSplitted[i].equals("")) {
-                        try{
-                            data.get(i).getRSSI().add(Double.parseDouble(lineSplitted[i]));
-                        } catch(NumberFormatException ex){
-                            //Jesli trafimy tu to znaczy ze ktorys Beacon ma mniej RSSI (moze miec mniejszy TimeStamp)
-                        }
-                    }
-                }
+                currentData.getTimeStamps().add(Long.parseLong(lineSplitted[0]));
+                currentData.getRSSI().add(Double.parseDouble(lineSplitted[1]));
             }
-            for(int i=0;i<lineSplitted.length;++i) {
-                for(int j=0;j<lineSplitted.length;++j) {
-                    if (beacons.get(i).getMacAdress().equals(macSplitted[j])) {
-                        receiver.setDataFromBeacon(data);
-                    }
-                }
-            }
+            receiver.getDataFromBeacon().add(currentData);
 
         } catch(Exception ex) {
             ex.printStackTrace();

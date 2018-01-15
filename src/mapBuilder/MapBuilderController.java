@@ -92,7 +92,7 @@ public class MapBuilderController{
             }
         });*/
     }
-    public void drawBeacon(Beacon beacon){
+    private void drawBeacon(Beacon beacon){
         Circle circle;
 
         circle =new Circle(50,50,10);
@@ -144,8 +144,7 @@ public class MapBuilderController{
         Scene scene = new Scene(grid);
         window.setScene(scene);
         window.showAndWait();
-        Obstacle obstacle =new Obstacle("100","100",width.getText(),height.getText(),"black");
-        return obstacle;
+        return new Obstacle("100","100",width.getText(),height.getText(),"black");
     }
     //Popup window with beacon form
     private Beacon setBeaconParametres(){
@@ -183,8 +182,7 @@ public class MapBuilderController{
             Scene scene = new Scene(grid);
             window.setScene(scene);
             window.showAndWait();
-            Beacon beacon =new Beacon(macAddress.getText());
-            return beacon;
+            return new Beacon(macAddress.getText());
         }
     }
     //static class Wrapper<T> { T value ; }

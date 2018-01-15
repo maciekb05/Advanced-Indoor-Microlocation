@@ -8,6 +8,9 @@ import java.util.LinkedList;
 public class Receiver {
     private LinkedList<DataFromBeacon> dataFromBeacon;
 
+    public Receiver(){
+        dataFromBeacon = new LinkedList<>();
+    }
     /**
      * Gets data from beacon
      */

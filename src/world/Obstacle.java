@@ -4,11 +4,11 @@ package world;
  * Obstacle class represents walls or additional obstacles
  */
 public class Obstacle {
-    private double layoutX;
-    private double layoutY;
-    private double width;
-    private double height;
-    private String fill;
+    private final double layoutX;
+    private final double layoutY;
+    private final double width;
+    private final double height;
+    private final String fill;
 
     /**
      * Main constructor with parameters

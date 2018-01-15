@@ -18,6 +18,7 @@ import maps.ParseScene;
 
 import java.io.File;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Controller {
 
@@ -42,12 +43,13 @@ public class Controller {
     public void initialize() {
         chooseBeaconButton.setDisable(true);
         world = new World();
+        labelRSSI = new LinkedList<>();
     }
 
     /**
      * OnChoose method for choosing file with map.
-     * It is loading, parsing and making beacon and receiver objects,
-     * printing map on pane, making active button for choosing file of data from beacons.
+     * It loads, parses and makes beacon and receiver objects,
+     * prints map on pane, makes button active for choosing file of data from beacons.
      */
     @FXML
     public void chooseMap(){
@@ -79,57 +81,40 @@ public class Controller {
     }
 
     /**
-     * OnChoose method for choosing file with data from beacons.
-     * It is loading, parsing and adding data to beacons.
+     * Method for choosing file or files with data from beacons.
+     * It loads, parses and adds data to beacons.
      */
     @FXML
     public void chooseBeacons(){
-        Receiver receiver = new Receiver();
-        world.getReceivers().add(receiver);
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Beacons Files","*.csv"));
         fileChooser.setTitle("Open Resource File");
         fileChooser.setInitialDirectory(new File("src/files"));
-        File selectedFile =  fileChooser.showOpenDialog(mapPane.getScene().getWindow());
-        labelRSSI = new LinkedList<>();
-        if (selectedFile != null) {
-            BeaconLoader beaconLoader = new BeaconLoader();
-            beaconLoader.loadRSSI(world.getBeacons(), world.getReceivers().getLast(), selectedFile);
-        }
-        if (selectedFile != null) {
-            hBoxRSSI.getChildren().clear();
-            for(Beacon beacon : world.getBeacons()) {
+        List<File> selectedFiles =  fileChooser.showOpenMultipleDialog(mapPane.getScene().getWindow());
+
+        for(File selectedFile : selectedFiles){
+            if (selectedFile != null) {
+                BeaconLoader beaconLoader = new BeaconLoader();
+                beaconLoader.loadRSSI(world.getBeacons(), world.getReceiver(), selectedFile);
                 VBox vBox = new VBox();
-                vBox.getChildren().add(new Text(beacon.getMacAdress()));
+                vBox.getChildren().add(new Text(world.getReceiver().getDataFromBeacon().getLast().getMacAddress()));
                 labelRSSI.add(new Text("0"));
                 vBox.getChildren().add(labelRSSI.getLast());
                 vBox.setPadding(new Insets(10));
                 hBoxRSSI.getChildren().add(vBox);
             }
-
+            mainBorderPane.getScene().getWindow().sizeToScene();
         }
-        mainBorderPane.getScene().getWindow().sizeToScene();
     }
 
     /**
-     * OnClick method form Simulate! button.
-     * It is starting simulation threads.
+     * OnClick method for Simulate! button.
+     * It starts simulation thread.
      */
     @FXML
     public void simulate(){
-        LinkedList<SimulationThread> threads = new LinkedList<>();
-
-        for(int i = 0; i < world.getBeacons().size(); ++i) {
-            threads.add(new SimulationThread(labelRSSI.get(i), world.getBeacons().get(i), world.getReceivers().get(0).getDataFromBeacon().get(i)));
-        }
-        try{
-            Thread.sleep(2000);
-        } catch (InterruptedException ex) {
-            System.out.println("Interrupted Simulation");
-        }
-        for(SimulationThread thread : threads) {
-            thread.start();
-        }
+        SimulationThread thread = new SimulationThread(world, labelRSSI);
+        thread.start();
     }
 
     private void addObstacle(Obstacle obstacle) {
@@ -154,5 +139,4 @@ public class Controller {
             mapPane.getChildren().add(new Circle(x, y, 10));
         }
     }
-
 }

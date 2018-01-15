@@ -8,9 +8,7 @@ import java.util.LinkedList;
 public class World {
     private LinkedList<Beacon> beacons;
     private LinkedList<Obstacle> obstacles;
-    private LinkedList<Receiver> receivers;
-    private Integer width;
-    private Integer height;
+    private final Receiver receiver;
 
     /**
      * Default constructor
@@ -18,9 +16,9 @@ public class World {
     public World() {
         beacons = new LinkedList<>();
         obstacles = new LinkedList<>();
-        receivers = new LinkedList<>();
-        width = 0;
-        height = 0;
+        receiver = new Receiver();
+        Integer width = 0;
+        Integer height = 0;
     }
 
     /**
@@ -49,7 +47,7 @@ public class World {
     /**
      * Gets linked list of receivers
      */
-    public LinkedList<Receiver> getReceivers() {
-        return receivers;
+    public Receiver getReceiver() {
+        return receiver;
     }
 }
