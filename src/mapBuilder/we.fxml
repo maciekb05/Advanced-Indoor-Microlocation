@@ -1,0 +1,9 @@
+
+                <Circle id="123" fill="#161616" layoutX="123.0" layoutY="123.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />            </children>
+        </Pane>
+    </children>
+</GridPane>
+                <Circle id="123" fill="#161616" layoutX="123.0" layoutY="123.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />            </children>
+        </Pane>
+    </children>
+</GridPane>
