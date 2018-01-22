@@ -1,9 +1,11 @@
 package world;
 
+import javafx.scene.shape.Circle;
+
 /**
  * Beacon is a class for representing beacons
  */
-public class Beacon {
+public class Beacon{
     private Double X;
     private Double Y;
     private final String macAddress;
