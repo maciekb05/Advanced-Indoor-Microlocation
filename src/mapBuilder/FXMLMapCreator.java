@@ -9,6 +9,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class FXMLMapCreator {
     private static File file;
@@ -17,8 +20,9 @@ public class FXMLMapCreator {
         ObservableList<Node> mapElements = mapPane.getChildren();
         double layoutX, layoutY, width, height;
         String id;
-        path = "src/mapBuilder/"+path+".fxml";
         file = new File(path);
+        beginFXMLFile();
+
         for (Node node : mapElements) {
             Bounds nodeBounds = node.getBoundsInParent();
             if (node instanceof Circle) {
@@ -69,6 +73,27 @@ public class FXMLMapCreator {
                 "        </Pane>\n" +
                 "    </children>\n" +
                 "</GridPane>");
+    }
+    private  static void beginFXMLFile(){
+        BufferedReader bufferedReader = null;
+        try {
+            bufferedReader = new BufferedReader(new FileReader("C:\\Users\\bula3\\OneDrive\\Dokumenty\\GitHub\\Advanced-Indoor-Microlocation\\src\\mapBuilder\\mapTemplate.fxml"));
+            StringBuffer stringBuffer = new StringBuffer();
+            String line = null;
+
+            while((line =bufferedReader.readLine())!=null){
+
+                stringBuffer.append(line).append("\n");
+            }
+            addToFile(stringBuffer.toString());
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 

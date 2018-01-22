@@ -1,11 +1,13 @@
 package mapBuilder;
 
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import world.*;
 
 import javafx.fxml.FXML;
@@ -19,22 +21,31 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.LinkedList;
 
 
 public class MapBuilderController{
+    private static Integer beaconRadius= 10;
+
     private LinkedList<Beacon> beacons;
     private LinkedList<Obstacle> obstacles;
-    double orgSceneX, orgSceneY;
-    double orgTranslateX, orgTranslateY;
-    private double mapWidth, mapHeight;
-    private Bounds boundsInScene, circleBoundsInScene, rectangleBoundsInScene;
-    double mapMinX, mapMinY, mapMaxX, mapMaxY;
-    Circle currentCircle;
-    Rectangle currentRectangle;
+    private double orgSceneX, orgSceneY;
+    private double orgTranslateY, orgTranslateX;
+    private double mapMinX, mapMinY, mapMaxX, mapMaxY;
+    private Circle currentCircle;
+    private Rectangle currentRectangle;
 
     @FXML
     Pane mapPane;
+    @FXML
+    Button saveButton;
+    @FXML
+    Button obstacleButton;
+    @FXML
+    Button beaconButton;
+    @FXML
+    Button newButton;
 
     @FXML
     TextField widthTextField;
@@ -43,9 +54,9 @@ public class MapBuilderController{
     public void initialize(){
         beacons=new LinkedList<>();
         obstacles=new LinkedList<>();
-        mapHeight = 350;
-        mapWidth = 400;
-        boundsInScene = mapPane.localToScene(mapPane.getBoundsInLocal());
+        double mapHeight = 350;
+        double mapWidth = 400;
+        Bounds boundsInScene = mapPane.localToScene(mapPane.getBoundsInLocal());
         mapMinY = boundsInScene.getMinY();
         mapMinX = boundsInScene.getMinX();
         mapMaxX = mapMinX + mapWidth;
@@ -64,16 +75,29 @@ public class MapBuilderController{
 
     @FXML
     public void saveButtonPressed(){
-        FXMLMapCreator.createMap(mapPane,"we");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Map files","*.fxml"));
+        fileChooser.setInitialDirectory(new File("src/files"));
+
+        Stage stage = (Stage) mapPane.getScene().getWindow();
+
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+            System.out.println(file.getPath());
+            FXMLMapCreator.createMap(mapPane,file.getPath());
+            stage.close();
+        }
     }
 
-    @FXML
+   /* @FXML
     public void changeMapWidth(){
-        mapPane.setPrefWidth(Integer.parseInt(widthTextField.getText()));
+        mapPane.setPrefWidth(Double.parseInt(widthTextField.getText()));
     }  @FXML
     public void changeMapHeight(){
-        mapPane.setPrefWidth(Integer.parseInt(widthTextField.getText()));
+        mapPane.setPrefWidth(Double.parseInt(widthTextField.getText()));
     }
+*/
 
     private void addObstacle(){
         Rectangle rectangle;
@@ -85,19 +109,7 @@ public class MapBuilderController{
         fixPositionOfNode(rectangle);
     }
 
-
-    private void addBeacon(){
-        Circle circle;
-
-        circle = setBeaconParametres();
-        circle.setOnMousePressed(circleOnMousePressedEventHandler);
-        circle.setOnMouseDragged(circleOnMouseDraggedEventHandler);
-        circle.setFill(Color.web("black"));
-        mapPane.getChildren().addAll(circle);
-
-    }
     // Popup window with obstacle form
-
     private Rectangle setObstacleParametres() {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL); //it blocks interaction with othres scenes
@@ -139,24 +151,62 @@ public class MapBuilderController{
         //Defining the Submit button
         Button submit = new Button("Submit");
         GridPane.setConstraints(submit, 1, 5);
-        submit.setOnAction(e->window.close());
 
-        grid.getChildren().addAll(layoutX,layoutY,width,height,transparency,submit,colorPicker);
+        Text error = new Text();
+        GridPane.setConstraints(error,0,6);
+        error.setFill(Color.RED);
+
+        Rectangle rectangle = new Rectangle();
+        submit.setOnAction( e->{
+            if(isStringDouble(width.getText()) && isStringDouble(height.getText()) && isStringDouble(layoutX.getText()) && isStringDouble(layoutY.getText()) && isStringDouble(transparency.getText()) )
+            {
+                Double heightDouble =Double.parseDouble(height.getText());
+                Double widthtDouble =Double.parseDouble(width.getText());
+                Double XDouble =Double.parseDouble(layoutX.getText());
+                Double YDouble =Double.parseDouble(layoutY.getText());
+
+                if(checkRectangleSizeAndPosition(heightDouble,widthtDouble,XDouble,YDouble)){
+                    rectangle.setHeight(heightDouble);
+                    rectangle.setWidth(widthtDouble);
+                    rectangle.setX(XDouble);
+                    rectangle.setY(YDouble);
+                    window.close();
+                }else {
+                    error.setText("Invalid size or postion");
+                }
+            }
+            else {
+                error.setText("Values must be Doubles");
+            }
+        });
+
+        grid.getChildren().addAll(layoutX,layoutY,width,height,transparency,submit,colorPicker,error);
 
         Scene scene = new Scene(grid);
         window.setScene(scene);
         window.showAndWait();
 
-        Rectangle rectangle = new Rectangle(Double.parseDouble(layoutX.getText()),Double.parseDouble(layoutY.getText()),Double.parseDouble(width.getText()),Double.parseDouble(height.getText()));
         rectangle.setFill(colorPicker.getValue());
         return rectangle;
     }
 
-    private TextField createTextField(String promptText){
-        TextField textField = new TextField();
-        textField.setPrefColumnCount(10);
-        textField.setPromptText(promptText);
-        return textField;
+    private boolean checkRectangleSizeAndPosition(Double height, Double width, Double layoutX, Double layoutY) {
+            if(height<0 || width<0 || layoutX<0 || layoutY<0 || layoutX+width+mapMinX>mapMaxX || layoutY+height+mapMinY>mapMaxY )
+                return false;
+            else
+            return true;
+    }
+
+
+    private void addBeacon(){
+        Circle circle;
+
+        circle = setBeaconParametres();
+        circle.setOnMousePressed(circleOnMousePressedEventHandler);
+        circle.setOnMouseDragged(circleOnMouseDraggedEventHandler);
+        circle.setFill(Color.web("black"));
+        mapPane.getChildren().addAll(circle);
+
     }
 
     //Popup window with beacon form
@@ -192,22 +242,52 @@ public class MapBuilderController{
             //Defining the Submit button
             Button submit = new Button("Submit");
             GridPane.setConstraints(submit, 1, 1);
-            submit.setOnAction(e->window.close());
 
-            grid.getChildren().addAll(macAddress,submit,layoutX,layoutY);
 
+            Circle beacon =new Circle();
+
+            Text error = new Text();
+            GridPane.setConstraints(error,0,6);
+            error.setFill(Color.RED);
+
+            submit.setOnAction( e->{
+                if( isStringDouble(layoutX.getText()) && isStringDouble(layoutY.getText()) ){
+                    Double doubleX = Double.parseDouble(layoutX.getText());
+                    Double doubleY = Double.parseDouble(layoutY.getText());
+                    if(checkBeaconSizeAndPosition(doubleX,doubleY)){
+                        beacon.setCenterX(doubleX);
+                        beacon.setCenterY(doubleY);
+                        beacon.setId(macAddress.getText());
+                        beacon.setRadius(beaconRadius);
+                        window.close();
+
+                    }else {
+                        error.setText("Invalid position");
+                    }
+                }
+                else {
+                    error.setText("Values must be Doubles");
+                }
+            });
+
+            grid.getChildren().addAll(layoutX,layoutY,submit,macAddress,error);
 
             Scene scene = new Scene(grid);
             window.setScene(scene);
             window.showAndWait();
-            Circle beacon = new Circle(Double.parseDouble(layoutX.getText()),Double.parseDouble(layoutY.getText()),10);
-            beacon.setId(macAddress.getText());
             return beacon;
         }
     }
 
+    private boolean checkBeaconSizeAndPosition(Double doubleX, Double doubleY) {
+        if(doubleX-beaconRadius<0 || doubleY-beaconRadius<0 || doubleX+mapMinX+beaconRadius>mapMaxX || doubleY+mapMinY+beaconRadius> mapMaxY)
+            return false;
+        else
+            return true;
+    }
 
-    EventHandler<MouseEvent> circleOnMousePressedEventHandler =
+
+    private EventHandler<MouseEvent> circleOnMousePressedEventHandler =
             t -> {
                 currentCircle = (Circle)t.getSource();
                 orgSceneX = t.getSceneX();
@@ -216,7 +296,7 @@ public class MapBuilderController{
                 orgTranslateY = ((Circle)(t.getSource())).getTranslateY();
             };
 
-    EventHandler<MouseEvent> circleOnMouseDraggedEventHandler =
+    private EventHandler<MouseEvent> circleOnMouseDraggedEventHandler =
             new EventHandler<MouseEvent>() {
 
                 @Override
@@ -226,7 +306,7 @@ public class MapBuilderController{
                     double offsetY = t.getSceneY() - orgSceneY;
                     double newTranslateX = orgTranslateX + offsetX;
                     double newTranslateY = orgTranslateY + offsetY;
-                    circleBoundsInScene = currentCircle.localToScene(currentCircle.getBoundsInLocal());
+                    Bounds circleBoundsInScene = currentCircle.localToScene(currentCircle.getBoundsInLocal());
                     if(t.getSceneX()>mapMinX && t.getSceneY()>mapMinY && t.getSceneX()<mapMaxX && t.getSceneY()<mapMaxY) {
                         if (checkForCollisions(circleBoundsInScene)) {
                             ((Circle) (t.getSource())).setTranslateX(newTranslateX);
@@ -259,7 +339,7 @@ public class MapBuilderController{
                     double offsetY = t.getSceneY() - orgSceneY;
                     double newTranslateX = orgTranslateX + offsetX;
                     double newTranslateY = orgTranslateY + offsetY;
-                    rectangleBoundsInScene = currentRectangle.localToScene(currentRectangle.getBoundsInLocal());
+                    Bounds rectangleBoundsInScene = currentRectangle.localToScene(currentRectangle.getBoundsInLocal());
 
                     if(t.getSceneX()>mapMinX && t.getSceneY()>mapMinY && t.getSceneX()<mapMaxX && t.getSceneY()<mapMaxY) {
                         if (checkForCollisions(rectangleBoundsInScene)) {
@@ -267,6 +347,7 @@ public class MapBuilderController{
                             ((Rectangle) (t.getSource())).setTranslateY(newTranslateY);
                         }
                     }
+                    System.out.println("Max:"+mapMaxX);
                     fixPositionOfNode(currentRectangle);
 
 
@@ -274,7 +355,6 @@ public class MapBuilderController{
             };
 
             private boolean checkForCollisions(Bounds nodeBounds){
-                System.out.println(mapMaxX);
                return nodeBounds.getMaxX()<mapMaxX && nodeBounds.getMaxY()<mapMaxY && nodeBounds.getMinY()>mapMinY && nodeBounds.getMinX()>mapMinX ;
             }
 
@@ -298,5 +378,85 @@ public class MapBuilderController{
                 }
             }
 
+    public void newMapButtonPressed(ActionEvent actionEvent) {
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL); //it blocks interaction with othres scenes
+        window.setTitle("Map setter");
+        window.setMinWidth(250);
+        window.setMinHeight(200);
+
+        //Creating a GridPane container
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(5);
+        grid.setHgap(5);
+
+        //Defining the width text field
+        Text widthText = new Text();
+        widthText.setText("Map Width:");
+        Text heightText = new Text();
+        heightText.setText("Map Height:");
+
+        final TextField width = createTextField("");
+        GridPane.setConstraints(widthText, 0, 0);
+        GridPane.setConstraints(width, 0, 1);
+
+        //Defining the width text field
+        final TextField height = createTextField("");
+        GridPane.setConstraints(heightText, 0, 2);
+        GridPane.setConstraints(height, 0, 3);
+
+        //Defining the Submit button
+        Button submit = new Button("Submit");
+        GridPane.setConstraints(submit, 0, 4);
+        Text error = new Text();
+        GridPane.setConstraints(error,0,5);
+        submit.setOnAction(
+                e->{
+                    if(isStringDouble(width.getText()) && isStringDouble(height.getText())) {
+                        window.close();
+                        mapPane.setPrefWidth(Double.parseDouble(width.getText()));
+                        mapPane.setPrefHeight(Double.parseDouble(height.getText()));
+                        mapMaxX=mapMinX+Double.parseDouble(width.getText());
+                        mapMaxY=mapMinY+Double.parseDouble(height.getText());
+
+                    }
+                    else {
+                        error.setText("Values must be doubles");
+                        error.setFill(Color.RED);
+                    }
+                }
+        );
+
+        grid.getChildren().addAll(widthText,heightText,width,height,submit,error);
+
+        Scene scene = new Scene(grid);
+        window.setScene(scene);
+        window.showAndWait();
+
+        newButton.setDisable(true);
+        saveButton.setDisable(false);
+        obstacleButton.setDisable(false);
+        beaconButton.setDisable(false);
+    }
+
+    private boolean isStringDouble(String s)
+    {
+        try
+        {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException ex)
+        {
+            return false;
+        }
+    }
+
+    private TextField createTextField(String promptText){
+        TextField textField = new TextField();
+        textField.setPrefColumnCount(10);
+        textField.setPromptText(promptText);
+        return textField;
+    }
 }
 

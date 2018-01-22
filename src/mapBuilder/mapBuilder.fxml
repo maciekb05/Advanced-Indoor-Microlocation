@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mapBuilder.MapBuilderController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mapBuilder.MapBuilderController">
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <VBox layoutX="20.0" layoutY="73.0" prefHeight="247.0" prefWidth="134.0" spacing="40.0">
                <children>
-                  <Button fx:id="obstacleButton" mnemonicParsing="false" onAction="#obstacleButtonPressed" prefHeight="45.0" prefWidth="90.0" text="Obstacle" />
-                  <Button fx:id="beaconButton" mnemonicParsing="false" onAction="#beaconButtonPressed" prefHeight="45.0" prefWidth="90.0" text="Beacon" />
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonPressed" prefHeight="45.0" prefWidth="90.0" text="Save" />
+               <Button fx:id="newButton" mnemonicParsing="false" onAction="#newMapButtonPressed" prefHeight="45.0" prefWidth="90.0" text="New" />
+                  <Button fx:id="obstacleButton" disable="true" mnemonicParsing="false" onAction="#obstacleButtonPressed" prefHeight="45.0" prefWidth="90.0" text="Obstacle" />
+                  <Button fx:id="beaconButton" disable="true" mnemonicParsing="false" onAction="#beaconButtonPressed" prefHeight="45.0" prefWidth="90.0" text="Beacon" />
+                  <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#saveButtonPressed" prefHeight="45.0" prefWidth="90.0" text="Save" />
                </children>
             </VBox>
          </children></AnchorPane>
-      <Pane fx:id="mapPane" layoutX="167.0" layoutY="44.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="350.0" prefWidth="400.0" style="-fx-border-color: black;" />
-   <TextField fx:id="widthTextField" layoutX="241.0" layoutY="14.0" onInputMethodTextChanged="#changeMapWidth" prefHeight="16.0" prefWidth="90.0" />
+      <Pane fx:id="mapPane" layoutX="167.0" layoutY="44.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" style="-fx-border-color: black;" />
+ <!--  <TextField fx:id="widthTextField" layoutX="241.0" layoutY="14.0" onInputMethodTextChanged="#changeMapWidth" prefHeight="16.0" prefWidth="90.0" />
    <TextField layoutX="426.0" layoutY="14.0" onInputMethodTextChanged="#changeMapHeight" prefHeight="16.0" prefWidth="90.0" />
    <Text layoutX="176.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Width:" wrappingWidth="58.13665771484375">
       <font>
@@ -32,4 +30,5 @@
          <Font size="17.0" />
       </font>
    </Text>
+-->
 </Pane>
