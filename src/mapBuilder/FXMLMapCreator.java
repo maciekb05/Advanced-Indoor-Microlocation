@@ -79,7 +79,7 @@ public class FXMLMapCreator {
     private  static void beginFXMLFile(){
         BufferedReader bufferedReader = null;
         try {
-            bufferedReader = new BufferedReader(new FileReader("C:\\Users\\bula3\\OneDrive\\Dokumenty\\GitHub\\Advanced-Indoor-Microlocation\\src\\mapBuilder\\mapTemplate.fxml"));
+            bufferedReader = new BufferedReader(new FileReader("src/mapBuilder/mapTemplate.fxml"));
             StringBuffer stringBuffer = new StringBuffer();
             String line = null;
 
