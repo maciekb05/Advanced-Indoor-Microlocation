@@ -37,6 +37,8 @@ public class MapBuilderController{
     private Rectangle currentRectangle;
 
     @FXML
+    Pane mainPane;
+    @FXML
     Pane mapPane;
     @FXML
     Button saveButton;
@@ -84,7 +86,6 @@ public class MapBuilderController{
 
         File file = fileChooser.showSaveDialog(stage);
         if (file != null) {
-            System.out.println(file.getPath());
             FXMLMapCreator.createMap(mapPane,file.getPath());
             stage.close();
         }
@@ -419,6 +420,7 @@ public class MapBuilderController{
                         mapPane.setPrefHeight(Double.parseDouble(height.getText()));
                         mapMaxX=mapMinX+Double.parseDouble(width.getText());
                         mapMaxY=mapMinY+Double.parseDouble(height.getText());
+                        mainPane.getScene().getWindow().sizeToScene();
 
                     }
                     else {

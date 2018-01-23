@@ -9,6 +9,9 @@ public class World {
     private LinkedList<Beacon> beacons;
     private LinkedList<Obstacle> obstacles;
     private final Receiver receiver;
+    private Double height;
+    private Double width;
+
 
     /**
      * Default constructor
@@ -17,8 +20,6 @@ public class World {
         beacons = new LinkedList<>();
         obstacles = new LinkedList<>();
         receiver = new Receiver();
-        Integer width = 0;
-        Integer height = 0;
     }
 
     /**
@@ -49,5 +50,21 @@ public class World {
      */
     public Receiver getReceiver() {
         return receiver;
+    }
+
+    public Double getHeight() {
+        return height;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
+    public Double getWidth() {
+        return width;
+    }
+
+    public void setWidth(Double width) {
+        this.width = width;
     }
 }

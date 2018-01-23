@@ -23,11 +23,12 @@ public class ParseScene {
     private LinkedList<Obstacle> obstacles;
     private LinkedList<Beacon> beacons;
     private Document doc;
+    private Double worldWidth;
+    private Double worldHeight;
+
     private String path = "./src/files/firstmap.fxml";
 
-    /**
-     * Parsing walls, and additional obstacles from fxml file
-     */
+
     public void parseObstacles(){
         try {
             loadFxml(path);
@@ -45,6 +46,21 @@ public class ParseScene {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void parseWorld(){
+        try {
+            loadFxml(path);
+            NodeList pane= doc.getElementsByTagName("Pane");
+            Element element = (Element) pane.item(0);
+            worldHeight = Double.valueOf(element.getAttribute("prefHeight"));
+            worldWidth = Double.valueOf(element.getAttribute("prefWidth"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
     }
@@ -102,6 +118,14 @@ public class ParseScene {
      */
     public LinkedList<Beacon> getBeacons() {
         return beacons;
+    }
+
+    public Double getWorldWidth() {
+        return worldWidth;
+    }
+
+    public Double getWorldHeight() {
+        return worldHeight;
     }
 }
 

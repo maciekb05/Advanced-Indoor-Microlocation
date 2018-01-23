@@ -22,6 +22,7 @@ public class FXMLMapCreator {
         String id;
         file = new File(path);
         beginFXMLFile();
+        addPaneToMapFile(mapPane.getPrefHeight(),mapPane.getPrefWidth());
 
         for (Node node : mapElements) {
             Bounds nodeBounds = node.getBoundsInParent();
@@ -39,6 +40,7 @@ public class FXMLMapCreator {
                 Paint fill = ((Rectangle) node).getFill();
                 addObstacleToMapFile(layoutX,layoutY,width,height,fill);
             }
+
         }
 
         completeFXMLFile();
@@ -94,6 +96,10 @@ public class FXMLMapCreator {
         }
 
 
+    }
+    private static void addPaneToMapFile(double height, double width){
+        String text = "\n <Pane prefHeight=\""+height+"\" prefWidth=\""+width+"\"> \n <children>";
+        addToFile(text);
     }
 
 

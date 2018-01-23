@@ -1,14 +1,11 @@
 package sample;
 
+import javafx.scene.layout.*;
 import world.*;
 import beacons.BeaconLoader;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -65,6 +62,9 @@ public class Controller {
             parseScene.setPath(selectedFile.getPath());
             parseScene.parseObstacles();
             parseScene.parseBeacons();
+            parseScene.parseWorld();
+            world.setHeight(parseScene.getWorldHeight());
+            world.setWidth(parseScene.getWorldWidth());
 
             for (Beacon beacon :parseScene.getBeacons()){
                 addBeacon(beacon);
@@ -76,6 +76,9 @@ public class Controller {
             }
             world.setObstacles(parseScene.getObstacles());
         }
+        mapPane.setPrefHeight(world.getHeight());
+        mapPane.setPrefWidth(world.getWidth());
+        mapPane.setStyle("-fx-border-color: black");
         mainBorderPane.getScene().getWindow().sizeToScene();
         chooseBeaconButton.setDisable(false);
     }
